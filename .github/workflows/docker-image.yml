@@ -19,14 +19,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Fetch latest Agave version
-        id: fetch_version
-        run: |
-          LATEST_VERSION=$(curl -s https://api.github.com/repos/anza-xyz/agave/releases/latest | jq -r .tag_name | sed 's/^v//')
-          echo "AGAVE_VERSION=$LATEST_VERSION" >> $GITHUB_ENV
-          echo "Latest Agave version is $LATEST_VERSION"
-        env:
-          AGAVE_VERSION: ""
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -46,7 +38,6 @@ jobs:
           images: |
             ghcr.io/samui-build/samui-test-validator
           tags: |
-            type=raw,value=${{ env.AGAVE_VERSION }}
             type=raw,value=latest,priority=1024
             type=schedule,pattern={{date 'YYYYMMDD'}}
             type=ref,event=branch
@@ -58,13 +49,11 @@ jobs:
           annotations: |
             maintainer=samui-build
             org.opencontainers.image.title=Solana Test Validator
-            org.opencontainers.image.version=${{ env.AGAVE_VERSION }}
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
-          build-args: AGAVE_VERSION=${{ env.AGAVE_VERSION }}
           tags: ${{ steps.meta_solana_test_validator.outputs.tags }}
           annotations: ${{ steps.meta_solana_test_validator.outputs.annotations }}
