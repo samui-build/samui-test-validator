@@ -1,22 +1,20 @@
-# Solana Test Validator on Docker
+# Samui Test Validator on Docker
 
-This repository contains a Docker image for the Solana Test Validator.
+This repository contains a Docker image for the Samui Test Validator.
 
-This Docker image is built each night for `linux/amd64` as well as `linux/arm64` platforms.
-
-This makes it possible to run this image on devices with Apple Silicon processors.
+It's based on the [Solana Test Validator](https://github.com/beeman/solana-test-validator).
 
 ## Usage
 
-To run the Solana Test Validator, you can use the following command:
+To run the Samui Test Validator, you can use the following command:
 
 ```shell
-docker run -it -p 8899:8899 -p 8900:8900 --rm --name solana-test-validator ghcr.io/beeman/solana-test-validator:latest
+docker run -it -p 8899:8899 -p 8900:8900 --rm --name samui-test-validator ghcr.io/samui-build/samui-test-validator:latest
 ```
 
-This will start the Solana Test Validator on port 8899 and 8900.
+This will start the Samui Test Validator on port 8899 and 8900.
 
-See the [examples](https://github.com/beeman/solana-test-validator/tree/main/examples) directory for more information.
+information.
 
 ## Building the Docker image
 
@@ -26,7 +24,7 @@ To build the Docker image, you can use the following command using [just](https:
 just build
 ```
 
-This will build the Docker image and tag it as `ghcr.io/beeman/solana-test-validator`.
+This will build the Docker image and tag it as `ghcr.io/samui-build/samui-test-validator`.
 
 ## Running the Docker image
 
@@ -36,7 +34,7 @@ To run the Docker image, you can use the following command:
 just run
 ```
 
-This will start the Solana Test Validator on port 8899 and 8900.
+This will start the Samui Test Validator on port 8899 and 8900.
 
 ## Running a shell in the Docker image
 
@@ -48,18 +46,3 @@ just run-sh
 
 This will start a shell in the Docker image.
 
-## Running an examples
-
-To run an example, you can use the following command:
-
-```shell
-just example <example-name>
-```
-
-For example, to run the `docker-compose` example, you can use the following command:
-
-```shell
-just example docker-compose
-```
-
-This will start the Docker Compose example.
